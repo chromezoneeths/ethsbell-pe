@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
+.current {
+  background: gray;
+  padding: 5px;
+  margin: 0;
+}
+
+/*Bai felecia*/
+
+
+#board table td:not(.current) {
+  border: 2px solid #1a2741;
+  padding: 5px;
+  margin: 0;
+}
+
+/*Bai felecia*/
+
+
+#board table {
+  border-collapse: collapse;
+  border: 0;
+}
+
+/*Bai felecia*/
+
+#ethsbell {
+  position: inherit;
+}
+
+/*Bai felecia*/
+
+body {
+  color: #1a2741;
+  font-family: 'Roboto Mono', monospace;
+}
