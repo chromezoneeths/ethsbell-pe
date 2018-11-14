@@ -23,7 +23,6 @@ if (mocktime == null) {
 }
 
 var dataURL = "https://api.ethsbell.xyz/data" + mocktime;
-var displayURL = "https://api.ethsbell.xyz/display" + mocktime;
 // Function to get data from ETHSBell
 
 function ajax(theUrl, callback) {
@@ -46,7 +45,6 @@ function ethsbellDiv(text) {
 
 function ethsbell() {
   console.log('Bell schedule update');
-  ajax(displayURL, ethsbellDiv);
   ajax(dataURL, updateBoard);
 }
 
@@ -133,6 +131,7 @@ var periodList = [];
 //Function to update the table
 
 function convertTo12Hour(time) {
+  var AM = true;
   if (time.length == 4) {
     time = '0' + time;
   }
@@ -141,11 +140,17 @@ function convertTo12Hour(time) {
   minutes += '';
   if (hours > 12) {
     hours -= 12;
+    AM = false;
   }
   if (minutes.length == 1) {
     minutes = '0' + minutes;
   }
-  return hours + ':' + minutes;
+  if (AM == true) {
+   AM = "AM";
+  } else {
+   AM = "PM";
+  }
+  return hours + ':' + minutes + ' ' + AM;
 }
 
 function updateBoard(data) {
@@ -155,11 +160,16 @@ function updateBoard(data) {
   
   for (var x; x < response.periodArray.length; x ++) {
    
-    periodList.push(resposne.periodArray[x].periodName);
+    periodList.push(response.periodArray[x].periodName);
     
   }
   
   console.log(periodList);
+  
+  var currentTime = response.formattedTime;
+  currentTime = convertTo12Hour(currentTime);
+  
+  ethsbellDiv("<h1 style='margin:0;font-size:5rm'>" + currentTime + "</h1>");
 
   if (response.dayOfWeek == 'Saturday' || response.dayOfWeek == 'Sunday') {
     Locations.div().innerHTML = 'Have a nice day!';
