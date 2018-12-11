@@ -240,7 +240,7 @@ var teacherList = [];
 var teacherLocation = [];
 
 function table(json) {
-  json = JSON.parse(json);
+  //json = JSON.parse(json);
   var teacherArray = json.columns.teachername;
   var data = json.rows;
   for (var j = 0; j < teacherArray.length; j++) {
