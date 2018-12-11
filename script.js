@@ -26,8 +26,56 @@ var dataURL = "https://api.ethsbell.xyz/data" + mocktime;
 var displayURL = "https://api.ethsbell.xyz/display" + mocktime;
 
 //FIND NEW SOLUTION THAT USES HTTPS!!!
-var sheetURL = "http://gsx2json.com/api?id=1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU";
+var sheetURL = "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/1/public/values?alt=json";
 // Function to get data from ETHSBell
+
+function run(msg) {
+  var datadiv = document.getElementById('data');
+  var data = JSON.parse(msg);
+  datadiv.innerHTML = 'Collected data: ' + JSON.stringify(data)
+  var responseObj = {};
+  var rows = [];
+  var columns = {};
+  for (var i = 0; i < data.feed.entry.length; i++) {
+    var entry = data.feed.entry[i];
+    var keys = Object.keys(entry);
+    var newRow = {};
+    var queried = false;
+    for (var j = 0; j < keys.length; j++) {
+      var gsxCheck = keys[j].indexOf('gsx$');
+      if (gsxCheck > -1) {
+        var key = keys[j];
+        var name = key.substring(4);
+        var content = entry[key];
+        var value = content.$t;
+        queried = true;
+        if (true && !isNaN(value)) {
+          value = Number(value);
+        }
+        newRow[name] = value;
+        if (queried === true) {
+          if (!columns.hasOwnProperty(name)) {
+            columns[name] = [];
+            columns[name].push(value);
+          } else {
+            columns[name].push(value);
+          }
+        }
+      }
+    }
+    if (queried === true) {
+      rows.push(newRow);
+    }
+  }
+  if (true) {
+    responseObj['columns'] = columns;
+  }
+  if (true) {
+    responseObj['rows'] = rows;
+  }
+
+  table(responseObj);
+}
 
 function ajax(theUrl, callback) {
   var xmlHttp = new XMLHttpRequest();
@@ -50,7 +98,7 @@ function ethsbellDiv(text) {
 function ethsbell() {
 
   //Update table
-  ajax(sheetURL, table);
+  ajax(sheetURL, run);
   //update bell
   console.log('Bell schedule update');
   ajax(displayURL, ethsbellDiv);
