@@ -24,7 +24,9 @@ if (mocktime == null) {
 
 var dataURL = "https://api.ethsbell.xyz/data" + mocktime;
 var displayURL = "https://api.ethsbell.xyz/display" + mocktime;
-var sheetURL = "https://gsx2json.com/api?id=1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU";
+
+//FIND NEW SOLUTION THAT USES HTTPS!!!
+var sheetURL = "http://gsx2json.com/api?id=1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU";
 // Function to get data from ETHSBell
 
 function ajax(theUrl, callback) {
