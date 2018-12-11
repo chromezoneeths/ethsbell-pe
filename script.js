@@ -30,14 +30,12 @@ var sheetURL = "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1
 // Function to get data from ETHSBell
 
 function run(msg) {
-  var datadiv = document.getElementById('data');
-  var data = JSON.parse(msg);
-  datadiv.innerHTML = 'Collected data: ' + JSON.stringify(data)
+  var rundata = JSON.parse(msg);
   var responseObj = {};
   var rows = [];
   var columns = {};
-  for (var i = 0; i < data.feed.entry.length; i++) {
-    var entry = data.feed.entry[i];
+  for (var i = 0; i < rundata.feed.entry.length; i++) {
+    var entry = rundata.feed.entry[i];
     var keys = Object.keys(entry);
     var newRow = {};
     var queried = false;
@@ -73,7 +71,6 @@ function run(msg) {
   if (true) {
     responseObj['rows'] = rows;
   }
-
   table(responseObj);
 }
 
