@@ -83,8 +83,7 @@ var Locations = {
   }
 };
 
-var periodList = [];
-
+var periodList = ["Early Bird", "1st Period", "2nd Period", "3rd Period", "4th Period", "5th Period", "6th Period", "7th Period", "8th Period", "9th Period"];
 
 
 // Add perids to array to init
@@ -116,22 +115,7 @@ var currentPeriod;
 var response;
 
 function updateBoard(data) {
-<<<<<<< HEAD
   response = JSON.parse(data);
-=======
-  var response = JSON.parse(data);
-  
-  periodList = [];
-  
-  for (var x; x < response.periodArray.length; x ++) {
-   
-    periodList.push(resposne.periodArray[x].periodName);
-    
-  }
-  
-  console.log(periodList);
-
->>>>>>> dbcc82519a082184c822744f89c118adf282e395
   if (response.dayOfWeek == 'Saturday' || response.dayOfWeek == 'Sunday') {
     Locations.div().innerHTML = 'Have a nice day!';
   } else {
