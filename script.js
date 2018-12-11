@@ -24,6 +24,7 @@ if (mocktime == null) {
 
 var dataURL = "https://api.ethsbell.xyz/data" + mocktime;
 var displayURL = "https://api.ethsbell.xyz/display" + mocktime;
+var sheetURL = "http://gsx2json.com/api?id=1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU";
 // Function to get data from ETHSBell
 
 function ajax(theUrl, callback) {
@@ -45,9 +46,14 @@ function ethsbellDiv(text) {
 // ETHS BELL function
 
 function ethsbell() {
+
+  //Update table
+  ajax(sheetURL, table);
+  //update bell
   console.log('Bell schedule update');
   ajax(displayURL, ethsbellDiv);
   ajax(dataURL, updateBoard);
+
 }
 
 // strip html tags from string (for later)
@@ -74,60 +80,18 @@ ethsbell();
 var Locations = {
   "div": function() {
     return sel('#board');
-  },
-  "Early Bird": {
-    "TeacherA": "Location 1",
-    "TeacherB": "Location 2",
-    "TeacherC": "Location 3"
-  },
-  "1st Period": {
-    "TeacherA": "Location 4",
-    "TeacherB": "Location 5",
-    "TeacherC": "Location 6"
-  },
-  "2nd Period": {
-    "TeacherA": "Location 7",
-    "TeacherB": "Location 8",
-    "TeacherC": "Location 9"
-  },
-  "3rd Period": {
-    "TeacherA": "Location 10",
-    "TeacherB": "Location 11",
-    "TeacherC": "Location 12"
-  },
-  "4th Period": {
-    "TeacherA": "Location 13",
-    "TeacherB": "Location 14",
-    "TeacherC": "Location 15"
-  },
-  "5th Period": {
-    "TeacherA": "Location 16",
-    "TeacherB": "Location 17",
-    "TeacherC": "Location 18"
-  },
-  "6th Period": {
-    "TeacherA": "Location 19",
-    "TeacherB": "Location 20",
-    "TeacherC": "Location 21"
-  },
-  "7th Period": {
-    "TeacherA": "Location 22",
-    "TeacherB": "Location 23",
-    "TeacherC": "Location 24"
-  },
-  "8th Period": {
-    "TeacherA": "Location 25",
-    "TeacherB": "Location 26",
-    "TeacherC": "Location 27"
-  },
-  "9th Period": {
-    "TeacherA": "Location 28",
-    "TeacherB": "Location 29",
-    "TeacherC": "Location 30"
   }
 };
 
 var periodList = ["Early Bird", "1st Period", "2nd Period", "3rd Period", "4th Period", "5th Period", "6th Period", "7th Period", "8th Period", "9th Period"];
+
+
+// Add perids to array to init
+
+for (var k = 0; k < periodList.length; k++) {
+  Locations[periodList[k]] = {};
+}
+
 
 //Function to update the table
 
@@ -146,9 +110,12 @@ function convertTo12Hour(time) {
   }
   return hours + ':' + minutes;
 }
+//global variables for board
+var currentPeriod;
+var response;
 
 function updateBoard(data) {
-  var response = JSON.parse(data);
+  response = JSON.parse(data);
   if (response.dayOfWeek == 'Saturday' || response.dayOfWeek == 'Sunday') {
     Locations.div().innerHTML = 'Have a nice day!';
   } else {
@@ -161,7 +128,6 @@ function updateBoard(data) {
 
     var periodCount = Object.keys(Locations).length - 1; // How many periods there are in the day
 
-    var currentPeriod;
     var periodTimes = response.schedule.period_array;
 
 
@@ -216,6 +182,25 @@ function updateBoard(data) {
       }
     }
   }
+}
+
+var classPerPeriod = [];
+var teacherList = [];
+var teacherLocation = [];
+
+function table(json) {
+  json = JSON.parse(json);
+  var teacherArray = json.columns.teachername;
+  var data = json.rows;
+  for (var j = 0; j < teacherArray.length; j++) {
+    for (var k = 0; k < periodList.length; k++) {
+      if (Object.values(data[j])[k + 1] !== 'null') {
+        Locations[periodList[k]][data[j].teachername] = Object.values(data[j])[k + 1];
+      }
+    }
+  }
+
+
 }
 
 // Create table (INIT)
