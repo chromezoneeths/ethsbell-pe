@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
 
 .current {
   background: gray;
@@ -8,7 +8,6 @@
 
 /*Bai felecia*/
 
-
 #board table td:not(.current) {
   border: 2px solid #1a2741;
   padding: 5px;
@@ -16,7 +15,6 @@
 }
 
 /*Bai felecia*/
-
 
 #board table {
   border-collapse: collapse;
@@ -33,5 +31,53 @@
 
 body {
   color: #1a2741;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
+}
+
+#searchicon {
+  background-color: #c34614;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 3vw;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 3vw;
+  font-size: 2vw;
+  z-index: 1;
+  display: inline-block;
+  position: fixed;
+  z-index: 1;
+  top: 1vw;
+}
+
+#search {
+  display: block;
+  width: inherit;
+  height: 3vw;
+  position: fixed;
+  top: 1vw;
+  background: #1a2741;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  border-radius: 3vw;
+  color: white;
+  text-indent: 4vw;
+}
+
+#search::placeholder {
+  font-family: "Material Icons";
+  color: black;
+  font-size: 2vw;
+  line-height: 3vw;
+  vertical-align: middle;
+}
+
+#searchdiv {
+  width: 3vw;
+  transition: all 0.5s;
+}
+
+#searchdiv:focus-within {
+  width: 15vw;
 }
