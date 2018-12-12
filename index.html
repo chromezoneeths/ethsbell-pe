@@ -12,12 +12,17 @@
 </head>
 
 <body>
+<div id="searchdiv" onclick="document.querySelector('#search').focus();
+">
+    <div id="searchicon">
+      <i class="material-icons">search</i>
+    </div>
+    <input id="search" onkeydown="search();" />
+  </div>
   <center>
     <div id="ethsbell"></div>
     <br><br>
     <div id="board"></div>
   </center>
-  <script src="script.js"></script>
 </body>
-
 </html>
